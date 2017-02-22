@@ -45,7 +45,7 @@ func main() {
 			log.Fatal(err)
 		}
 		
-		log.Printf("Received message, type %s, subType %s, text %s", m.Type, m.SubType, m.Text)
+		log.Printf("Received message, type: %s, subType: %s, text: %s", m.Type, m.SubType, m.Text)
 		
 		// see if we're mentioned
 		if m.Type == "message" && m.SubType == "file_share" && strings.Contains(m.Text, "<@"+id+">") {
