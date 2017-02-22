@@ -13,6 +13,7 @@ import (
 var token string
 var chrisify string
 var haar string
+var faces string
 var base_path = "/var/www/bot/"
 var base_url = getenv("base_url", "http://my.domain.com/bot")
 
@@ -25,14 +26,15 @@ func getenv(key, fallback string) string {
 }
 
 func main() {
-	if len(os.Args) != 4 {
-		fmt.Fprintf(os.Stderr, "usage: slackbot slack-bot-token /path/to/chrisify /path/to/haar\n")
+	if len(os.Args) != 5 {
+		fmt.Fprintf(os.Stderr, "usage: slackbot slack-bot-token /path/to/chrisify /path/to/haar /path/to/faces\n")
 		os.Exit(1)
 	}
 
 	token = os.Args[1]
 	chrisify = os.Args[2]
 	haar = os.Args[3]
+	faces = os.Args[4]
 
 	// start a websocket-based Real Time API session
 	ws, id := slackConnect(token)
@@ -44,9 +46,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		
+
 		log.Printf("Received message, type: %s, subType: %s, text: %s", m.Type, m.SubType, m.Text)
-		
+
 		// see if we're mentioned
 		if m.Type == "message" && m.SubType == "file_share" && strings.Contains(m.Text, "<@"+id+">") {
 			go func(m Message) {
