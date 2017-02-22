@@ -44,7 +44,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		
+		log.Println("Received message:" + m)
+		
 		// see if we're mentioned
 		if m.Type == "message" && m.SubType == "file_share" && strings.Contains(m.Text, "<@"+id+">") {
 			go func(m Message) {
