@@ -13,8 +13,16 @@ import (
 var token string
 var chrisify string
 var haar string
-var base_path = "/var/www/chrisbot.zikes.me/"
-var base_url = "http://chrisbot.zikes.me/"
+var base_path = "/var/www/bot/"
+var base_url = getenv("base_url", "http://my.domain.com/bot")
+
+func getenv(key, fallback string) string {
+    value := os.Getenv(key)
+    if len(value) == 0 {
+        return fallback
+    }
+    return value
+}
 
 func main() {
 	if len(os.Args) != 4 {
